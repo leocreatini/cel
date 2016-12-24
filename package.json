@@ -1,7 +1,7 @@
 {
   "name": "cel",
   "version": "1.0.0",
-  "description": "",
+  "description": "A javascript component micro-framework",
   "main": "index.js",
   "scripts": {
     "build": "node node_modules/rollup/bin/rollup -c ./build/dev-config.js",
