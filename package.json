@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "node node_modules/rollup/bin/rollup -c ./build/dev-config.js",
-    "build:prod": "node node_modules/rollup/bin/rollup -c ./build/prod-config.js"
+    "build:prod": "node node_modules/rollup/bin/rollup -c ./build/prod-config.js",
+    "build:all": "npm run build && npm run build:prod"
   },
   "repository": {
     "type": "git",

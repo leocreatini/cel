@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Cel Example</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" >
+	<script
+		src="https://code.jquery.com/jquery-3.1.1.min.js"
+		integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+		crossorigin="anonymous"></script>
+</head>
+<body>
+
+
+<!-- Style -->
+<style>
+	.widget {
+		text-align: center;
+		cursor: pointer;
+	}
+</style>
+
+
+<!-- Markup -->
+<section class="widget">
+	<h1 class="widget__header">Hello World</h1>
+	<input type="text" class="widget__text-field">
+</section>
+
+
+
+<!-- Scripting -->
+<script src="../dist/cel.min.js"></script>
+<script>
+var APP = window.APP || {};
+
+// app.helloWorld.js
+APP.helloWorld = Cel({
+	name: 'HelloWorld',
+	_: {
+		NAME: 'Leo'
+	},
+	state: {
+		clicks: 0
+	},
+	elems: [
+		{ name: 'header', selector: '.widget__header' },
+		{ name: '$textField', selector: '.widget__text-field' }
+	],
+	methods: {
+		greet: function( name ) {
+			console.log( 'Hello, ' + name );
+			this.setState( 'clicks', this.state.clicks + 1);
+			console.log( 'CPU greeted ' + this.state.clicks + ' humans.' );
+		},
+		report: function( data ) {
+			console.log( 'Reporting:', data );
+		}
+	},
+	handle: {
+		headerClick: function(e) {
+			this.methods.greet( this._.NAME );
+		},
+		textFieldValChanged: function(e) {
+			this.methods.report( e.currentTarget.value );
+		}
+	},
+	events: [
+		{
+			target: 'header',
+			type: 'click',
+			handler: 'headerClick'
+		},
+		{
+			target: '$textField',
+			type: 'input',
+			handler: 'textFieldValChanged',
+			debounce: 500
+		}
+	]
+});
+
+APP.helloWorld.init();
+
+</script>
+
+</body>
+</html>
