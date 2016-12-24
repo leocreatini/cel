@@ -1,0 +1,32 @@
+{
+  "name": "cel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node node_modules/rollup/bin/rollup -c ./build/dev-config.js",
+    "build:prod": "node node_modules/rollup/bin/rollup -c ./build/prod-config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leocreatini/cel.git"
+  },
+  "keywords": [
+    "component",
+    "framework"
+  ],
+  "author": "Leo Creatini",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/leocreatini/cel/issues"
+  },
+  "homepage": "https://github.com/leocreatini/cel#readme",
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-es2015-rollup": "^3.0.0",
+    "rollup": "^0.38.0",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-uglify": "^1.0.1"
+  }
+}
