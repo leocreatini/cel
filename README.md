@@ -126,6 +126,6 @@ This is to set up any type of event like clicks, changes, inputs, scroll, and so
 
 
 ## What's Next?
-* Add a _throttle_ setting for events to add another easy-to-use tool.
+~~* Add a _throttle_ setting for events to add another easy-to-use tool.~~ Added 12/26/2016
 * Add an _expose_ setting to make specified methods publically available.
 * Improve the docs, add a playable demo, and beef up the examples.
