@@ -1,16 +1,20 @@
 // src/core/component.js
-import { prototypesMixin } from './prototypesMixin';
+import { initMixin } from './initMixin';
+import { scriptMixin } from './scriptMixin';
 
 
 function Cel( options ) {
+	this.name = options.name || 'NamelessComponent';
 	this._ = options._;
 	this.state = options.state;
 	this.elems = options.elems;
 	this.methods = options.methods;
-	this.handle = options.handle;
+	this.handlers = options.handlers;
 	this.events = options.events;
 }
 
-prototypesMixin( Cel );
+initMixin( Cel );
+scriptMixin( Cel );
+
 
 export default Cel;
