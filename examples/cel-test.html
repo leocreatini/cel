@@ -29,7 +29,7 @@
 
 
 <!-- Scripting -->
-<script src="../dist/cel.min.js"></script>
+<script src="../dist/cel.js"></script>
 <script>
 var APP = window.APP || {};
 
@@ -37,7 +37,7 @@ var APP = window.APP || {};
 APP.helloWorld = Cel({
 	name: 'HelloWorld',
 	_: {
-		NAME: 'Leo'
+		NAME: 'Mr. Robot'
 	},
 	state: {
 		clicks: 0
@@ -50,13 +50,13 @@ APP.helloWorld = Cel({
 		greet: function( name ) {
 			console.log( 'Hello, ' + name );
 			this.setState( 'clicks', this.state.clicks + 1);
-			console.log( 'CPU greeted ' + this.state.clicks + ' humans.' );
+			console.log( '[CPU greeted '+this.state.clicks+' '+((this.state.clicks > 1) ? 'players' : 'player')+']' );
 		},
 		report: function( data ) {
 			console.log( 'Reporting:', data );
 		}
 	},
-	handle: {
+	handlers: {
 		headerClick: function(e) {
 			this.methods.greet( this._.NAME );
 		},
@@ -66,21 +66,21 @@ APP.helloWorld = Cel({
 	},
 	events: [
 		{
-			target: 'header',
+			target: 'header', // Must be name of an elems' name from above.
 			type: 'click',
-			handler: 'headerClick'
+			handler: 'headerClick' // Must be a name of a handler function from above
 		},
 		{
 			target: '$textField',
 			type: 'input',
 			handler: 'textFieldValChanged',
-			debounce: 500
+			throttle: 250
 		}
 	]
 });
 
+// Required to start component.
 APP.helloWorld.init();
-
 </script>
 
 </body>

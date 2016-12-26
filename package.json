@@ -1,12 +1,13 @@
 {
   "name": "cel",
-  "version": "1.0.0",
+  "version": "0.1.01",
   "description": "A javascript component micro-framework",
   "main": "index.js",
   "scripts": {
-    "build": "node node_modules/rollup/bin/rollup -c ./build/dev-config.js",
+    "build:dev": "node node_modules/rollup/bin/rollup -c ./build/dev-config.js",
+    "build:dev:watch": "node node_modules/rollup/bin/rollup -c ./build/dev-config.js -w",
     "build:prod": "node node_modules/rollup/bin/rollup -c ./build/prod-config.js",
-    "build:all": "npm run build && npm run build:prod"
+    "build:all": "npm run build:dev && npm run build:prod"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
     "babel-preset-es2015-rollup": "^3.0.0",
     "rollup": "^0.38.0",
     "rollup-plugin-babel": "^2.7.1",
-    "rollup-plugin-uglify": "^1.0.1"
+    "rollup-plugin-uglify": "^1.0.1",
+    "rollup-watch": "^2.5.0"
   }
 }
