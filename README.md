@@ -50,7 +50,7 @@ APP.helloWorld = Cel({
 	},
 	elems: [
 		{ name: 'header', selector: '.widget__header' }, // vanillaJS
-		{ name: '$textField', selector: '.widget__text-field' } // works with jQuery object too
+		{ name: '$textField', selector: '.widget__text-field' } // jQuery
 	],
 	methods: {
 		greet: function( name ) {

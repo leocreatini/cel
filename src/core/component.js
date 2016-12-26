@@ -11,6 +11,7 @@ function Cel( options ) {
 	this.methods = options.methods;
 	this.handlers = options.handlers;
 	this.events = options.events;
+	this.exposed = options.exposed;
 }
 
 initMixin( Cel );

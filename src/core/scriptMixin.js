@@ -69,8 +69,24 @@ export function scriptMixin(Cel) {
 		const vm = this;
 		try {
 			vm.state[ prop ] = value;
-		} catch (e) {
-			console.warn('['+vm.name+']: Could not set value of "'+prop+'", make sure it exists in your component config.');
+		} catch (err) {
+			console.warn('['+vm.name+']: Could not set value of "'+prop+'", make sure it exists in your component config.', err);
+		}
+	};
+
+	Cel.prototype.setHtml = function( targetElem, value ) {
+		const vm = this;
+
+		// Filters out an element that matches the event's target.
+		var findTargetInElements = function( item, index ) {
+			return item.name === targetElem;
+		};
+
+		var target = vm.elems.filter( findTargetInElements.bind(vm) )[0];
+		if ( target.type === 'jquery' ) {
+			target.elem.html( value );
+		} else if ( target.type === 'element') {
+			target.elem.innerHTML = value;
 		}
 	};
 

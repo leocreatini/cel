@@ -1,6 +1,6 @@
 {
   "name": "cel",
-  "version": "0.1.01",
+  "version": "0.1.1",
   "description": "A javascript component micro-framework",
   "main": "index.js",
   "scripts": {
