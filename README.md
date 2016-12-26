@@ -62,7 +62,7 @@ APP.helloWorld = Cel({
 			console.log( 'Reporting:', data );
 		}
 	},
-	handle: {
+	handlers: {
 		headerClick: function(e) {
 			this.methods.greet( this._.NAME );
 		},
