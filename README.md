@@ -21,7 +21,7 @@ var sampleComponent = Cel({
 	state: {},
 	elems: [],
 	methods: {},
-	handle: {},
+	handlers: {},
 	events: []
 });
 ```
@@ -50,7 +50,7 @@ APP.helloWorld = Cel({
 	},
 	elems: [
 		{ name: 'header', selector: '.widget__header' }, // vanillaJS
-		{ name: '$textField', selector: '.widget__text-field' } // works with jQuery object too
+		{ name: '$textField', selector: '.widget__text-field' } // jQuery
 	],
 	methods: {
 		greet: function( name ) {
@@ -127,5 +127,6 @@ This is to set up any type of event like clicks, changes, inputs, scroll, and so
 
 ## What's Next?
 ~~* Add a _throttle_ setting for events to add another easy-to-use tool.~~ Added 12/26/2016
-* Add an _expose_ setting to make specified methods publically available.
+~~* Add a _throttle_ setting for events to add another easy-to-use tool.~~
+~~* Add an _expose_ setting to make specified methods publically available.~~
 * Improve the docs, add a playable demo, and beef up the examples.

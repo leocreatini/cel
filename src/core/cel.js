@@ -1,14 +1,15 @@
 // src/core/cel.js
 import Component from './component';
+import exposeFunctions from '../helpers/exposeFunctions';
 
 
 const Cel = function( options ) {
 
-	var cel = new Component( options );
+	let cel = new Component( options );
 
-	return {
-		init: cel.init.bind(cel)
-	};
+	// Exposes specified functions for public use.
+	return exposeFunctions( cel );
+
 };
 
 export default Cel;

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Service Example | Cel</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" >
+	<script
+		src="https://code.jquery.com/jquery-3.1.1.min.js"
+		integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+		crossorigin="anonymous"></script>
+</head>
+<body>
+
+
+<!-- Style -->
+<style>
+	.widget {
+		text-align: center;
+		cursor: pointer;
+	}
+</style>
+
+
+<!-- Markup -->
+<section class="widget">
+	<h1 class="widget__header">Service Example</h1>
+	<button class="widget__button">Get Users</button>
+	<pre class="widget__list"></pre>
+</section>
+
+
+
+<!-- Scripting -->
+<script src="../dist/cel.js"></script>
+<script>
+var APP = window.APP || {};
+APP.controllers = {};
+APP.services = {};
+
+// app/controllers/widget.js
+APP.controllers.widget = Cel({
+	name: 'Widget',
+	state: {
+		users: []
+	},
+	elems: [
+		{ name: 'button', selector: '.widget__button' },
+		{ name: 'list', selector: '.widget__list' }
+	],
+	methods: {
+		fetchData: function() {
+			this.setStateAsync(
+				'users', // a property in 'this.state' as string
+				APP.services.users.getUsers, // async task, gets wrapped in a Promise
+				this.methods.updateUIList // async callback
+			);
+		},
+		updateUIList: function( data ) {
+			this.setHtml( 'list', data );
+		}
+	},
+	handlers: {
+		buttonClick: function( e ) {
+			this.methods.fetchData();
+		}
+	},
+	events: [
+		{
+			target: 'button',
+			type: 'click',
+			handler: 'buttonClick'
+		}
+	]
+});
+
+// app/services/users.js
+APP.services.users = Cel({
+	name: 'UserService',
+	_: {
+		GH_USERS_API_ENDPOINT: 'https://api.github.com/users'
+	},
+	state: {
+		users: []
+	},
+	methods: {
+		// 'getUsers' is used in 'setStateAsync', that wraps this one in a Promise.
+		// Async tasks require two params, 'onSuccess' and 'onFail'.
+		getUsers: function(onSuccess, onFail) {
+			if ( this.state.users.length < 1 ) {
+
+				this.fetch( // an in-house ajax GET request.
+					this._.GH_USERS_API_ENDPOINT, // url endpoint
+					this.methods.setUsers( onSuccess ), // on fetch success callback
+					onFail // on fetch error callback
+				);
+
+			} else {
+				return this.state.users;
+			}
+		},
+		setUsers: function( newUsers ) {
+			this.setState( 'users', newUsers );
+			return this.state.users; // returns
+		},
+		report: function( data ) {
+			console.log( data );
+		}
+	},
+	exposed: [ 'getUsers' ]
+});
+
+APP.controllers.widget.init();
+APP.services.users.init();
+</script>
+
+</body>
+</html>
