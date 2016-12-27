@@ -85,21 +85,21 @@ APP.services.users = Cel({
 		// 'getUsers' is used in 'setStateAsync', that wraps this one in a Promise.
 		// Async tasks require two params, 'onSuccess' and 'onFail'.
 		getUsers: function(onSuccess, onFail) {
+			// if there is no data, fetch from the endpoint.
 			if ( this.state.users.length < 1 ) {
-
 				this.fetch( // an in-house ajax GET request.
 					this._.GH_USERS_API_ENDPOINT, // url endpoint
 					this.methods.setUsers( onSuccess ), // on fetch success callback
 					onFail // on fetch error callback
 				);
-
+			// if data is already cached, just return without making call.
 			} else {
 				return this.state.users;
 			}
 		},
 		setUsers: function( newUsers ) {
 			this.setState( 'users', newUsers );
-			return this.state.users; // returns
+			return this.state.users; // returns data to setStateAsync's callback method.
 		},
 		report: function( data ) {
 			console.log( data );

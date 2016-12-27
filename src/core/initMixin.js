@@ -11,7 +11,7 @@ export function initMixin(Cel) {
 
 				// If jQuery is available and using the '$elemName' convention,
 				// Return a jQuery object.
-				if ( (jQuery != null || $ != null) &&
+				if ( (window.jQuery != null || window.$ != null) &&
 					vm.elems[i].name.slice(0, 1) === '$'
 				) {
 					vm.elems[i].elem = $( vm.elems[i].selector );

@@ -80,18 +80,18 @@ export function scriptMixin(Cel) {
 
 
 	// Set state synchronously.
-	Cel.prototype.setState = function( prop, value ) {
+	Cel.prototype.setState = function( state, value ) {
 		const vm = this;
 		try {
-			vm.state[ prop ] = value;
+			vm.state[ state ] = value;
 		} catch (err) {
-			console.warn('['+vm.name+']: Could not set value of "'+prop+'", make sure it exists in your component config.', err);
+			console.warn('['+vm.name+']: Could not set value of "'+state+'", make sure it exists in your component config.', err);
 		}
 	};
 
 
 	// Set state asynchronously.
-	Cel.prototype.setStateAsync = function( prop, asyncTask, asyncCallback ) {
+	Cel.prototype.setStateAsync = function( state, asyncTask, asyncCallback ) {
 		const vm = this;
 
 		// Create promise.
@@ -104,7 +104,7 @@ export function scriptMixin(Cel) {
 
 		// When promise succeeds.
 		p.then(function( data ) {
-			vm.state[ prop ] = data;
+			vm.setState( state, data);
 
 			if ( // Pass data to callback if it exists and is a function.
 				asyncCallback != null &&
@@ -117,18 +117,18 @@ export function scriptMixin(Cel) {
 
 		// When promise fails.
 		p.catch(function( err ) {
-			console.log('['+vm.name+']: Error setting state of '+prop+' asynchronously', err);
+			console.log('['+vm.name+']: Error setting state of '+state+' asynchronously', err);
 		});
 
 	};
 
 
-	Cel.prototype.setHtml = function( targetElem, value ) {
+	Cel.prototype.setHtml = function( elem, value ) {
 		const vm = this;
 
 		// Filters out an element that matches the event's target.
 		var findTargetInElements = function( item, index ) {
-			return item.name === targetElem;
+			return item.name === elem;
 		};
 
 		var target = vm.elems.filter( findTargetInElements.bind(vm) )[0];
