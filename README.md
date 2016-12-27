@@ -21,7 +21,7 @@ var sampleComponent = Cel({
 	state: {},
 	elems: [],
 	methods: {},
-	handle: {},
+	handlers: {},
 	events: []
 });
 ```
@@ -62,7 +62,7 @@ APP.helloWorld = Cel({
 			console.log( 'Reporting:', data );
 		}
 	},
-	handle: {
+	handlers: {
 		headerClick: function(e) {
 			this.methods.greet( this._.NAME );
 		},
@@ -126,6 +126,6 @@ This is to set up any type of event like clicks, changes, inputs, scroll, and so
 
 
 ## What's Next?
-* Add a _throttle_ setting for events to add another easy-to-use tool.
-* Add an _expose_ setting to make specified methods publically available.
+~~* Add a _throttle_ setting for events to add another easy-to-use tool.~~
+~~* Add an _expose_ setting to make specified methods publically available.~~
 * Improve the docs, add a playable demo, and beef up the examples.

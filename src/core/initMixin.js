@@ -2,7 +2,8 @@
 
 
 export function initMixin(Cel) {
-	// Finds elements via its selector and caches them under the 'elem' property of that element.
+	// Finds elements via its selector and caches them under the 'elem' property
+	// of that element.
 	Cel.prototype._getElementsOnMount = function() {
 		const vm = this;
 		if ( vm.elems != null ) {
@@ -27,14 +28,15 @@ export function initMixin(Cel) {
 	};
 
 	// Binds the component's "this" to the methods.
-	// This is done to be able to call 'this.methods.functionName()' from other methods and handlers.
+	// This is done to be able to call 'this.methods.functionName()' from other
+	// methods and handlers.
 	Cel.prototype._bindThisToMethods = function() {
 		const vm = this;
 		var methods = Object.keys(vm.methods);
-		if ( methods.length > 0 ) {
+		var numMethods = methods.length;
+		if ( numMethods > 0 ) {
 			for (
-				var i = 0,
-				numMethods = methods.length;
+				var i = 0;
 				i < numMethods;
 				i = i+1
 			) {
@@ -61,8 +63,12 @@ export function initMixin(Cel) {
 				// Binds each event to its designated target
 				// And add debounce or throttling if requested.
 				for ( var i = 0; i < numEvents; i++ ) {
-					var target = vm.elems.filter( findEventTargetInElements.bind(vm, i) )[0];
-					var bindType = ( target.type === 'jquery' ) ? 'on' : 'addEventListener';
+					var target = vm.elems.filter(
+						findEventTargetInElements.bind(vm, i)
+					)[0];
+					var bindType = ( target.type === 'jquery' )
+						? 'on'
+						: 'addEventListener';
 					var func = vm.handlers[ vm.events[i].handler ].bind(vm)
 
 					// Prevent using Debounce and Throttle for same event.

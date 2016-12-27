@@ -2,8 +2,9 @@
 
 
 export function scriptMixin(Cel) {
+
 	// From Underscore library
-	Cel.prototype._debounce = function(func, wait, immediate) {
+	Cel.prototype._debounce = function( func, wait, immediate ) {
 		let timeout;
 		return function() {
 			let context = this;
@@ -23,8 +24,9 @@ export function scriptMixin(Cel) {
 		};
 	};
 
+
 	// From Underscore library
-	Cel.prototype._throttle = function(func, wait, options) {
+	Cel.prototype._throttle = function( func, wait, options ) {
 		let context, args, result;
 		let timeout = null;
 		let previous = 0;
@@ -64,7 +66,20 @@ export function scriptMixin(Cel) {
 		};
 	};
 
+	Cel.prototype.fetch = function( url, successCallback, errorCallback ) {
+			var req;
+			req = new XMLHttpRequest();
+			req.onload = function() {
+				( req.status === 200 )
+					? successCallback( req.responseText )
+					: errorCallback( req.statusText );
+			}
+			req.open('GET', url, true);
+			req.send();
+	};
 
+
+	// Set state synchronously.
 	Cel.prototype.setState = function( prop, value ) {
 		const vm = this;
 		try {
@@ -73,6 +88,40 @@ export function scriptMixin(Cel) {
 			console.warn('['+vm.name+']: Could not set value of "'+prop+'", make sure it exists in your component config.', err);
 		}
 	};
+
+
+	// Set state asynchronously.
+	Cel.prototype.setStateAsync = function( prop, asyncTask, asyncCallback ) {
+		const vm = this;
+
+		// Create promise.
+		var p = new Promise(function( resolve, reject ) {
+			asyncTask(
+				function(data) { resolve( data ); },
+				function(err) { reject( err ); }
+			);
+		});
+
+		// When promise succeeds.
+		p.then(function( data ) {
+			vm.state[ prop ] = data;
+
+			if ( // Pass data to callback if it exists and is a function.
+				asyncCallback != null &&
+			 	typeof asyncCallback === 'function'
+			) {
+				asyncCallback( data );
+			}
+
+		});
+
+		// When promise fails.
+		p.catch(function( err ) {
+			console.log('['+vm.name+']: Error setting state of '+prop+' asynchronously', err);
+		});
+
+	};
+
 
 	Cel.prototype.setHtml = function( targetElem, value ) {
 		const vm = this;
@@ -91,3 +140,41 @@ export function scriptMixin(Cel) {
 	};
 
 };
+
+
+
+// // Else if it's asynchronous, check that it can be thrown into a Promise.
+// if (
+// 	(asyncCallback || asyncCallback === 'function') &&
+// 	typeof promisable === 'function'
+// ) {
+//
+// 	// Ensure a Promise library exists.
+// 	if ( window.Promise != null ) {
+//
+// 		var promise = new window.Promise( function(resolve, reject) {
+// 			console.log('Setting up promise');
+// 			try {
+// 				resolve( promisable() );
+// 			} catch( err ) {
+// 				reject( err );
+// 			}
+// 		});
+//
+// 		promise
+// 			.then(function( data ) {
+// 				console.log('Running "then" function with...', data);
+// 				vm.state[ prop ] = data;
+// 				asyncCallback( data );
+// 			})
+//
+// 			.catch(function( reason ) {
+// 				console.log('['+vm.name+']: Async setState() had an error,', reason);
+// 			});
+//
+//
+// 	} else {
+// 		console.warn('['+vm.name+']: This component is trying to use an async setState() but has no \'Promise\' library. Please include a polyfill.')
+// 	} // else
+//
+// } // if
