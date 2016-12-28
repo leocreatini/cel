@@ -21,7 +21,8 @@
 
 
 <!-- Markup -->
-<section class="widget">
+<!-- data-action attribute is used for initializing this component -->
+<section class="widget" data-action="controllers.helloWorld">
 	<h1 class="widget__header">Hello World</h1>
 	<input type="text" class="widget__text-field">
 </section>
@@ -33,54 +34,89 @@
 <script>
 var APP = window.APP || {};
 
-// app.helloWorld.js
-APP.helloWorld = Cel({
+APP.controllers = window.APP.controllers || {};
+
+
+// Create Component
+APP.controllers.helloWorld = Cel({
 	name: 'HelloWorld',
-	_: {
-		NAME: 'Mr. Robot'
-	},
-	state: {
-		clicks: 0
-	},
 	elems: [
 		{ name: 'header', selector: '.widget__header' },
-		{ name: '$textField', selector: '.widget__text-field' }
+		{ name: 'textField', selector:  '.widget__text-field' }
 	],
 	methods: {
 		greet: function( name ) {
-			console.log( 'Hello, ' + name );
-			this.setState( 'clicks', this.state.clicks + 1);
-			console.log( '[CPU greeted '+this.state.clicks+' '+((this.state.clicks > 1) ? 'players' : 'player')+']' );
-		},
-		report: function( data ) {
-			console.log( 'Reporting:', data );
+			if ( name.length < 1 ) {
+				name = 'World';
+			}
+			this.setHtml( 'header', 'Hello ' + name + '!');
 		}
 	},
 	handlers: {
-		headerClick: function(e) {
-			this.methods.greet( this._.NAME );
-		},
-		textFieldValChanged: function(e) {
-			this.methods.report( e.currentTarget.value );
+		textFieldInput: function( e ) {
+			this.methods.greet( e.currentTarget.value );
 		}
 	},
 	events: [
 		{
-			target: 'header', // Must be name of an elems' name from above.
-			type: 'click',
-			handler: 'headerClick' // Must be a name of a handler function from above
-		},
-		{
-			target: '$textField',
+			target: 'textField',
 			type: 'input',
-			handler: 'textFieldValChanged',
-			throttle: 250
+			handler: 'textFieldInput'
 		}
 	]
 });
 
-// Required to start component.
-APP.helloWorld.init();
+// Init all available components (those using data-action="componentName") within the APP namespace object.
+Cel( null ).init( APP );
+
+// // app.helloWorld.js
+// APP.helloWorld = Cel({
+// 	name: 'HelloWorld',
+// 	_: {
+// 		NAME: 'Mr. Robot'
+// 	},
+// 	state: {
+// 		clicks: 0
+// 	},
+// 	elems: [
+// 		{ name: 'header', selector: '.widget__header' },
+// 		{ name: '$textField', selector: '.widget__text-field' }
+// 	],
+// 	methods: {
+// 		greet: function( name ) {
+// 			console.log( 'Hello, ' + name );
+// 			this.setState( 'clicks', this.state.clicks + 1);
+// 			console.log( '[CPU greeted '+this.state.clicks+' '+((this.state.clicks > 1) ? 'players' : 'player')+']' );
+// 		},
+// 		report: function( data ) {
+// 			console.log( 'Reporting:', data );
+// 		}
+// 	},
+// 	handlers: {
+// 		headerClick: function(e) {
+// 			this.methods.greet( this._.NAME );
+// 		},
+// 		textFieldValChanged: function(e) {
+// 			this.methods.report( e.currentTarget.value );
+// 		}
+// 	},
+// 	events: [
+// 		{
+// 			target: 'header', // Must be name of an elems' name from above.
+// 			type: 'click',
+// 			handler: 'headerClick' // Must be a name of a handler function from above
+// 		},
+// 		{
+// 			target: '$textField',
+// 			type: 'input',
+// 			handler: 'textFieldValChanged',
+// 			throttle: 250
+// 		}
+// 	]
+// });
+//
+// // Required to start component.
+// APP.helloWorld.init();
 </script>
 
 </body>

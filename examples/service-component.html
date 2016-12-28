@@ -21,7 +21,7 @@
 
 
 <!-- Markup -->
-<section class="widget">
+<section class="widget" data-action="controllers.widget">
 	<h1 class="widget__header">Service Example</h1>
 	<button class="widget__button">Get Users</button>
 	<pre class="widget__list"></pre>
@@ -39,6 +39,7 @@ APP.services = {};
 // app/controllers/widget.js
 APP.controllers.widget = Cel({
 	name: 'Widget',
+	dependencies: ['services.users'],
 	state: {
 		users: []
 	},

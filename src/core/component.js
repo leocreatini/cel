@@ -5,6 +5,7 @@ import { scriptMixin } from './scriptMixin';
 
 function Cel( options ) {
 	this.name = options.name || 'NamelessComponent';
+	this.dependencies = options.dependencies;
 	this._ = options._;
 	this.state = options.state;
 	this.elems = options.elems;
