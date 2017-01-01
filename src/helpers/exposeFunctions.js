@@ -2,8 +2,11 @@
 
 
 export default function exposeFunctions( cel ) {
+
 	var exposed = {
-		init: cel.init.bind(cel)
+		__ctx__: cel.__ctx__.bind(cel),
+		init: cel.init.bind(cel),
+		getName: cel.getName.bind(cel)
 	};
 
 	// Null-check for exposed functions
@@ -18,13 +21,9 @@ export default function exposeFunctions( cel ) {
 				console.warn('['+cel.name+']: The \'init\' property is already taken by Cel, please use a different name for your function.');
 			} else {
 				// Attach all exposed functions to the 'exposed' object.
-				for (
-					let i = 0, numExposed = cel.exposed.length;
-					i < numExposed;
-					i = i + 1
-				) {
+				for ( let i = 0, numExpo = cel.exposed.length; i < numExpo; i++ ) {
 					if ( cel.methods.hasOwnProperty( cel.exposed[i] ) ) {
-						exposed[ cel.exposed[i] ] = cel.methods[ cel.exposed[i] ].bind(cel);
+						exposed[ cel.exposed[i] ] = cel.methods[ cel.exposed[i] ].bind( cel );
 					}
 				}
 			}

@@ -2,6 +2,7 @@
 
 
 export function scriptMixin(Cel) {
+	'use strict';
 
 	// From Underscore library
 	Cel.prototype._debounce = function( func, wait, immediate ) {
@@ -97,8 +98,8 @@ export function scriptMixin(Cel) {
 		// Create promise.
 		var p = new Promise(function( resolve, reject ) {
 			asyncTask(
-				function(data) { resolve( data ); },
-				function(err) { reject( err ); }
+				function( data ) { resolve( data ); },
+				function( err ) { reject( err ); }
 			);
 		});
 
@@ -140,41 +141,3 @@ export function scriptMixin(Cel) {
 	};
 
 };
-
-
-
-// // Else if it's asynchronous, check that it can be thrown into a Promise.
-// if (
-// 	(asyncCallback || asyncCallback === 'function') &&
-// 	typeof promisable === 'function'
-// ) {
-//
-// 	// Ensure a Promise library exists.
-// 	if ( window.Promise != null ) {
-//
-// 		var promise = new window.Promise( function(resolve, reject) {
-// 			console.log('Setting up promise');
-// 			try {
-// 				resolve( promisable() );
-// 			} catch( err ) {
-// 				reject( err );
-// 			}
-// 		});
-//
-// 		promise
-// 			.then(function( data ) {
-// 				console.log('Running "then" function with...', data);
-// 				vm.state[ prop ] = data;
-// 				asyncCallback( data );
-// 			})
-//
-// 			.catch(function( reason ) {
-// 				console.log('['+vm.name+']: Async setState() had an error,', reason);
-// 			});
-//
-//
-// 	} else {
-// 		console.warn('['+vm.name+']: This component is trying to use an async setState() but has no \'Promise\' library. Please include a polyfill.')
-// 	} // else
-//
-// } // if

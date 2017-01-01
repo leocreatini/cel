@@ -45,6 +45,7 @@ export function initMixin(Cel) {
 		} // if
 	};
 
+	// [TODO]: Refactor into smaller parts/mixins.
 	// Adds event-listeners to target elements when component initializes.
 	Cel.prototype._bindEventsOnMount = function() {
 		const vm = this;
@@ -125,6 +126,14 @@ export function initMixin(Cel) {
 		) {
 			console.warn('Please ensure that you named all your components with a \'name\' property. At least one is missing right now.');
 		}
+	}
+
+	Cel.prototype.getName = function() {
+		return this.name;
+	};
+
+	Cel.prototype.__ctx__ = function() {
+		return this;
 	}
 
 	// Publically accessible initialize function to bootstrap the component.

@@ -32,6 +32,7 @@
 <!-- Scripting -->
 <script src="../dist/cel.js"></script>
 <script>
+'use strict';
 var APP = window.APP || {};
 APP.controllers = {};
 APP.services = {};
@@ -39,7 +40,7 @@ APP.services = {};
 // app/controllers/widget.js
 APP.controllers.widget = Cel({
 	name: 'Widget',
-	dependencies: ['services.users'],
+	dependencies: [ 'UserService' ],
 	state: {
 		users: []
 	},
@@ -51,7 +52,7 @@ APP.controllers.widget = Cel({
 		fetchData: function() {
 			this.setStateAsync(
 				'users', // a property in 'this.state' as string
-				APP.services.users.getUsers, // async task, gets wrapped in a Promise
+				this.$['UserService'].getUsers, // async task, gets wrapped in a Promise
 				this.methods.updateUIList // async callback
 			);
 		},
@@ -109,8 +110,9 @@ APP.services.users = Cel({
 	exposed: [ 'getUsers' ]
 });
 
-APP.controllers.widget.init();
-APP.services.users.init();
+// Init all available components (those using data-action="componentName") within the APP namespace object.
+Cel( null ).init( APP );
+
 </script>
 
 </body>
