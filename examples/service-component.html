@@ -3,6 +3,7 @@
 <head>
 	<title>Service Example | Cel</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" >
+	<!-- Cel does not depend on jQuery, yet it is compatible -->
 	<script
 		src="https://code.jquery.com/jquery-3.1.1.min.js"
 		integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
@@ -16,6 +17,10 @@
 	.widget {
 		text-align: center;
 		cursor: pointer;
+	}
+
+	.widget__list {
+		text-align: left;
 	}
 </style>
 
@@ -33,6 +38,7 @@
 <script src="../dist/cel.js"></script>
 <script>
 'use strict';
+
 var APP = window.APP || {};
 APP.controllers = {};
 APP.services = {};
@@ -103,15 +109,15 @@ APP.services.users = Cel({
 			this.setState( 'users', newUsers );
 			return this.state.users; // returns data to setStateAsync's callback method.
 		},
-		report: function( data ) {
-			console.log( data );
-		}
+		// report: function( data ) {
+		// 	console.log( data );
+		// }
 	},
 	exposed: [ 'getUsers' ]
 });
 
 // Init all available components (those using data-action="componentName") within the APP namespace object.
-Cel( null ).init( APP );
+Cel().init( APP );
 
 </script>
 

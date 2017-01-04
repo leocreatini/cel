@@ -1,6 +1,11 @@
 // src/helpers/initAvailableComponents.js
 
 export default function initAvailableComponents( namespace ) {
+  if ( namespace == null ) {
+    console.warn('Must provide a global object as your namespace for your components.');
+    return;
+  }
+
   window.Cel.settings = window.Cel.settings || {};
   window.Cel.settings.namespace = namespace;
 

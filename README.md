@@ -2,8 +2,12 @@
 A JavaScript Component Micro-Framework
 
 
+## Demo
+Here's a playable Hello World demo on CodePen: http://codepen.io/leocreatini/pen/MbMeQo
+
+
 ## Why?
-This is a way to keep code organized and self-contained in an easy way. This helps keeps things clean and sets up your scripts so you can initialize it as soon as on page-load or never (if the page doesn't require it). None of your state, methods, or elements are exposed because it's wrapped inside a Revealing Module, only an `init()` is publically available.
+This is a way to keep code organized and self-contained in an easy way. It helps keeps things clean and sets up your scripts so you can run it on page-load or never (if the page doesn't require it). None of your state, methods, or elements are exposed because it's wrapped inside a Revealing Module, only an `init()` is publicly available.
 
 
 ## How To Use
@@ -108,6 +112,11 @@ APP.helloWorld.init();
 ### name (string)
 Provides a name to help debug in some cases.
 
+### dependencies (array of strings)
+A list to name other Cel modules that you want to use in the current module. So instead of using the stored variable name of your Cel component, like `APP.services.users`, you use `this.$['UserService']` (See /examples/service-component.html).
+
+Once it's listed in here, it will run an init for that dependency if it has not been already. Afterwards, it will make the dependency available under the `this.$` object (which is only created when the current component's init if it has dependencies listed).
+
 ### _ (object)
 A list for constants. Any static values that will not change, you can throw in here. As a convention, use fully UPPERCASED property names as a reminder that these values should be read-only and not be altered.
 
@@ -191,6 +200,9 @@ Handlers are a lot like the methods above except they are strictly callbacks to 
 ### events (array of objects)
 This is to set up any type of event like clicks, changes, inputs, scroll, and so on. You pass in an element name from above, the event type, and the name of the handler. Additionally, you can add a `debounce` property along with how many milliseconds you want to debounce.
 
+### exposed (array of strings)
+A list of methods that you want to be made available for other components. The exposed method must be in the `methods` object of functions.
+
 
 
 ## Component Methods
@@ -225,7 +237,8 @@ Fetch already exists for modern browsers, and this one works in just about the s
 
 
 ## What's Next?
-~~* Add a _throttle_ setting for events to add another easy-to-use tool.~~ Added 12/26/2016
-~~* Add an _expose_ setting to make specified methods publically available.~~
-* Add a way to dynamically `init()` each component that is actually present on the page.
+* ~~Add a _throttle_ setting for events to add another easy-to-use tool.~~
+* ~~Add an _expose_ setting to make specified methods publicly available.~~
+* ~~Add a way to dynamically `init()` each component that is actually present on the page.~~
+* ~~Add dependency injection to initialize dependencies and make inter-modular code run more smoothly.~~
 * Improve the docs, add a playable demo, and beef up the examples.

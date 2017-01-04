@@ -18,9 +18,7 @@ const Cel = function( options ) {
 	}
 
 	// Initialize components
-	else if (
-		options == null
-	) {
+	else if ( options == null ) {
 		return {
 			init: initAvailableComponents
 		};
@@ -28,7 +26,7 @@ const Cel = function( options ) {
 
 	// Warn of bad config.
 	else {
-		console.warn('There was bad configurations with a Cel component. You must pass options for a cel component, or "null" and a namespace object for parameters to initialize components.');
+		console.warn('There was bad configurations with a Cel component. You must pass options for a cel component, or "null" and a namespace object as a parameter to initialize your components.');
 	}
 
 };
